@@ -1,0 +1,24 @@
+# Environment variables
+.env
+
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+
+# IDEs and local configurations
+.vscode/
+.idea/
+
+# Large model files
+best-model/
+*.safetensors
+*.bin
+
+# Jupyter Notebook cache
+.ipynb_checkpoints/

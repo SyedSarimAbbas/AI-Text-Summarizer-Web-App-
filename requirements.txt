@@ -1,0 +1,12 @@
+torch
+transformers
+datasets
+evaluate
+fastapi
+uvicorn
+pydantic
+python-dotenv
+python-jose[cryptography]
+passlib
+bcrypt<5.0
+python-multipart

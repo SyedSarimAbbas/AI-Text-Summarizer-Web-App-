@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Text Summarizer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="static/style.css" />
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════
+     AUTH MODAL
+     Shown on page load if no JWT is found in localStorage.
+═══════════════════════════════════════════════════════ -->
+  <div class="auth-overlay" id="authOverlay">
+    <div class="auth-card" role="dialog" aria-modal="true" aria-label="Authentication">
+      <div class="auth-brand">
+        <span class="logo-eyebrow">Powered by Syed Sarim Abbas</span>
+        <h2 class="auth-title">AI Text Summarizer</h2>
+      </div>
+
+      <!-- Tab switcher -->
+      <div class="auth-tabs" role="tablist">
+        <button class="auth-tab active" id="tabLogin" role="tab" aria-selected="true"
+          aria-controls="panelLogin">Login</button>
+        <button class="auth-tab" id="tabRegister" role="tab" aria-selected="false"
+          aria-controls="panelRegister">Register</button>
+      </div>
+
+      <!-- Login panel -->
+      <div class="auth-panel" id="panelLogin" role="tabpanel">
+        <div class="auth-field">
+          <label class="auth-label" for="loginUsername">Username</label>
+          <input class="auth-input" id="loginUsername" type="text" autocomplete="username"
+            placeholder="your_username" />
+        </div>
+        <div class="auth-field">
+          <label class="auth-label" for="loginPassword">Password</label>
+          <input class="auth-input" id="loginPassword" type="password" autocomplete="current-password"
+            placeholder="••••••••" />
+        </div>
+        <div class="auth-error" id="loginError"></div>
+        <button class="btn-auth" id="loginBtn">Login →</button>
+      </div>
+
+      <!-- Register panel -->
+      <div class="auth-panel hidden" id="panelRegister" role="tabpanel">
+        <div class="auth-field">
+          <label class="auth-label" for="regUsername">Username</label>
+          <input class="auth-input" id="regUsername" type="text" autocomplete="username"
+            placeholder="choose_a_username" />
+        </div>
+        <div class="auth-field">
+          <label class="auth-label" for="regPassword">Password</label>
+          <input class="auth-input" id="regPassword" type="password" autocomplete="new-password"
+            placeholder="••••••••" />
+        </div>
+        <div class="auth-error" id="registerError"></div>
+        <button class="btn-auth" id="registerBtn">Create Account →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+     MAIN APP
+═══════════════════════════════════════════════════════ -->
+  <header>
+    <div class="logo-group">
+      <span class="logo-eyebrow">Powered by Syed Sarim Abbas</span>
+      <h1>AI Text Summarizer</h1>
+    </div>
+    <div class="header-right">
+      <div class="status-pill">
+        <span class="status-dot" id="statusDot"></span>
+        <span id="statusText">checking...</span>
+      </div>
+      <div class="user-pill" id="userPill">
+        <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+          <circle cx="12" cy="7" r="4" />
+        </svg>
+        <span id="userPillName"></span>
+        <button class="btn-logout" id="logoutBtn" title="Logout">
+          <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Input Panel -->
+    <div class="panel" id="inputPanel">
+      <div class="panel-header">
+        <span class="panel-title">Input</span>
+        <div class="meta-badges">
+          <span class="badge" id="wordBadge">0 words</span>
+          <span class="badge" id="charBadge">0 chars</span>
+        </div>
+      </div>
+      <textarea id="inputText" placeholder="Paste your text here..." spellcheck="false" maxlength="4096"></textarea>
+      <div class="input-actions">
+        <button class="btn-summarize" id="summarizeBtn">
+          ✦ Summarize Text
+        </button>
+        <div class="error-msg" id="errorMsg">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="8" x2="12" y2="12" />
+            <line x1="12" y1="16" x2="12.01" y2="16" />
+          </svg>
+          <span id="errorText">Something went wrong.</span>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <span class="counter">max <span>4096</span> chars</span>
+        <span class="counter" id="remaining"><span>4096</span> remaining</span>
+      </div>
+    </div>
+
+    <!-- Output Panel -->
+    <div class="panel" id="outputPanel">
+      <div class="panel-header">
+        <span class="panel-title">Summary</span>
+        <div class="meta-badges">
+          <button class="btn-copy" id="copyBtn">
+            <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" />
+              <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+            </svg>
+            Copy
+          </button>
+        </div>
+      </div>
+      <div class="output-area" id="outputArea">
+        <div class="output-placeholder" id="outputPlaceholder">
+          <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+            <path d="M9 12h6M9 16h6M9 8h6M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          <p>Your summary will appear here after processing.</p>
+        </div>
+        <div class="spinner" id="spinner">
+          <div class="spinner-ring"></div>
+          <span>Summarizing...</span>
+        </div>
+        <div class="summary-text" id="summaryText"></div>
+      </div>
+      <div class="panel-footer">
+        <span class="counter" id="summaryMeta">—</span>
+        <span class="counter">endpoint: <span>POST /summarize</span></span>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <span class="footer-info">Powered By Syed Sarim Abbas</span>
+    <div class="footer-badges">
+      <span class="tech-badge">HTML5</span>
+      <span class="tech-badge">CSS3</span>
+      <span class="tech-badge">JS</span>
+      <span class="tech-badge">FastAPI</span>
+      <span class="tech-badge">JWT</span>
+    </div>
+  </footer>
+
+  <script src="static/app.js"></script>
+</body>
+
+</html>
