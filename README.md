@@ -116,6 +116,14 @@ python backend/inference.py
 
 ---
 
+## ⚖️ License
+
+**© 2026 Syed Sarim Abbas. All Rights Reserved.**
+
+This project is **strictly proprietary** and is NOT open-source. If you wish to clone, copy, modify, distribute, or otherwise use any part of this repository for personal, educational, or commercial purposes, you **must obtain explicit written permission** from the owner. 
+
+---
+
 <div align="center">
   <p><i>Powered by Syed Sarim Abbas</i></p>
 </div>
