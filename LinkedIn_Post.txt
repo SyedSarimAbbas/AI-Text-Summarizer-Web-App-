@@ -28,7 +28,7 @@ Here is the technical breakdown of what's under the hood:
 - Features glassmorphism effects, dynamic loading transitions, and real-time word/character counters.
 - Built-in copy-to-clipboard functionality and secure Login/Register modals for a seamless user journey.
 
-� Engineering & DevOps Best Practices:
+📁 Engineering & DevOps Best Practices:
 - Proprietary Licensing: Custom license implemented to protect the intellectual property.
 - Optimized Environment: Structured for immediate deployment with modular backend architecture and a professional .gitignore strategy.
 
@@ -39,4 +39,4 @@ https://github.com/SyedSarimAbbas/AI-Text-Summarizer-Web-App-
 
 I’d love to hear your thoughts on building production AI tools or the challenges of long-form text processing!
 
-#AI #ArtificialIntelligence #MachineLearning #NLP #FastAPI #Python #DeepLearning #WebDevelopment #SoftwareEngineering #HuggingFace #PyTorch #FullStack #TechInnovation #DataScience #LLM #TextSummarization #CyberSecurity
+#AI #NLP #MachineLearning #DeepLearning #TextSummarization #FastAPI #Python #Transformers #HuggingFace #PyTorch #FullStack #SoftwareEngineering #DataScience #LLM #GenAI #GenerativeAI #Startup #TechInnovation #Coding #BackendDevelopment #WebDev #Glassmorphism #UIUX #SecureCoding #JWT #Automation #ArtificialIntelligence #API #GitHub #DevOps #Innovation #TechCommunity
